@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <nav class="fixed w-full h-[70px] bg-blue-800">
+        <div class="w-full h-full flex flex-row justify-between items-center container m-auto px-20">
+            <h1 class="text-3xl font-semibold text-white font-sanserif">Blog</h1>
+            <ul class="flex flex-row gap-5">
+                <li class="text-xl text-white">Home</li>
+                <li class="text-xl text-white"><a href="/loginSignup">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container m-auto px-30 grid grid-cols-3 gap-2 py-[70px]">
+        <div class="post col-span-2 rounded-sm">
+            <% blogs.map((ele, index)=>{ %>
+            <div class="w-full h-max  flex flex-row mt-2 gap-2 p-3 rounded-md shadow-md">
+                <img src="" alt="" srcset="" class="w-15 h-15 rounded-full bg-indigo-400">
+                <div class="w-full">
+                    <span class="flex flex-row gap-5 border-b-2 border-gray-300">
+                        <p class="font-semibold capitalize hover:text-blue-400">
+                            <%=ele.author %>
+                        </p>
+                        <p class="font-semibold bg">
+                            <%=ele.date_posted %>
+                        </p>
+                    </span>
+                    <h2 class="mt-2"><a class="text-2xl capitalize font-semibold hover:text-blue-400"><%=ele.title %></a></h2>
+                    <p class="mt-2"><%=ele.content %></p>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+        <div class="content-section p-4 bg-white shadow-md rounded-lg">
+            <h3 class="text-xl font-semibold text-gray-800">Our Sidebar</h3>
+            <p class="text-sm text-gray-500 mb-4">You can put any information here you'd like.</p>
+            
+            <ul class="list-none space-y-2">
+                <li class="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg">Latest Posts</li>
+                <li class="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg">Announcements</li>
+                <li class="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg">Calendars</li>
+                <li class="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg">etc</li>
+            </ul>
+        </div>        
+    </div>
+</body>
+
+</html>
