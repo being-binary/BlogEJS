@@ -2,6 +2,7 @@ import { users, posts} from './database/BlogProject.js'
 import express from 'express';
 import cors from 'cors'
 import bcrypt from "bcryptjs";
+import { ObjectId } from 'mongodb';
 const salt = bcrypt.genSaltSync(10);
 const app = express()
 const port = 8800
@@ -12,29 +13,9 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'));
 
 
-// const blogs = [{
-//     "title": "testTitle",
-//     "content": "this is a test Title",
-//     "date_posted": "12-12-1999",
-//     "author": "user_id"
-//   },
-//   {
-//     "title": "testTitle",
-//     "content": "this is a test Title",
-//     "date_posted": "12-12-1999",
-//     "author": "user_id"
-//   },
-//   {
-//     "title": "testTitle",
-//     "content": "this is a test Title",
-//     "date_posted": "12-12-1999",
-//     "author": "user_id"
-//   }]
-
-
 app.get('/', async(req,res)=>{
     const collection  = await posts();
-    const blogs = await collection.find().toArray();
+    const blogs = await collection.aggregate([{$lookup:{from:'users',localField:'user_id',foreignField:'_id', as:'user'}},{$project:{'user.password':0}}]).toArray();
     res.render('Index', {blogs})
 })
 
@@ -54,12 +35,31 @@ app.post('/post/new',async (req, res) => {
     }
 })
 
+app.get('/user/id=:id/post',async (req, res) => {
+    const { id } = ( req.params )
+    const post_collection  = await posts();
+    const user_collection  = await users();
+    const post  = await user_collection.findOne({_id:new ObjectId(id)})
+    const user_post = await post_collection.aggregate([{$lookup:{from:'users',localField:'user_id',foreignField:'_id', as:'user'}},{$unwind:'$user'},{$match:{'user._id':new ObjectId(id)}},{$project:{'user.password':0}}]).toArray();
+    console.log(user_post)
+    res.render('UserPost', {user_post})
+})
+
 app.get('/loginSignup', (req, res) => {
     res.render('LoginPage')
 })
 
+app.get('/login', (req, res) => {
+    res.render('Login')
+})
+
+app.get('/signup', (req, res) => {
+    res.render('Signup')
+})
+
 app.post('/signup', async (req, res)=>{
     const {email, password}  = req.body
+    console.log(req.body)
     const collection  = await users();
     const exist  = await collection.findOne({email})
     if(exist){
