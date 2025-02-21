@@ -12,33 +12,42 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'));
 
 
-const blogs = [{
-    "title": "testTitle",
-    "content": "this is a test Title",
-    "date_posted": "12-12-1999",
-    "author": "user_id"
-  },
-  {
-    "title": "testTitle",
-    "content": "this is a test Title",
-    "date_posted": "12-12-1999",
-    "author": "user_id"
-  }]
+// const blogs = [{
+//     "title": "testTitle",
+//     "content": "this is a test Title",
+//     "date_posted": "12-12-1999",
+//     "author": "user_id"
+//   },
+//   {
+//     "title": "testTitle",
+//     "content": "this is a test Title",
+//     "date_posted": "12-12-1999",
+//     "author": "user_id"
+//   },
+//   {
+//     "title": "testTitle",
+//     "content": "this is a test Title",
+//     "date_posted": "12-12-1999",
+//     "author": "user_id"
+//   }]
 
 
 app.get('/', async(req,res)=>{
     const collection  = await posts();
-    // const blogs = await collection.find().limit(10)
+    const blogs = await collection.find().toArray();
     res.render('Index', {blogs})
 })
 
+app.get('/post',async (req, res) => {
+    res.render('PostForm')
+})
 
 app.post('/post/new',async (req, res) => {
     const data = req.body
     const collection  = await posts();
     const acknowledged  = await collection.insertOne(data)
     if(acknowledged){
-        res.status(200).render('Index', {blogs})
+        res.status(200).json({msg:'post created', success:true})
     }
     else{
         res.status(401).json({msg:'error', success:false})
