@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body>
-    <%- include('Navbar'); %>
+    <%- include('../Navbar'); %>
     <div class="container m-auto px-30 grid grid-cols-3 gap-2 py-[70px]">
         <div class="post col-span-2 rounded-sm">
             <form class="flex flex-col shadow-md p-3 mt-1">
@@ -19,7 +19,7 @@
                 <input type="submit" onclick="post(event , user=1)" value="submit" class="mt-4 cursor-pointer text-white font-bold text-xl bg-green-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-green-500/50">
             </form>
         </div>
-        <%- include('Sidebar'); %>
+        <%- include('../Sidebar'); %>
     </div>
 </body>
 <script src="/src/js/post/post.js"></script>

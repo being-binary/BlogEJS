@@ -24,7 +24,7 @@
                             <%= new Date(ele.date).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year:'numeric' }) %>
                         </p>
                     </span>
-                    <h2 class="mt-2"><a class="text-2xl capitalize font-semibold hover:text-blue-400"><%=ele.title %></a></h2>
+                    <h2 class="mt-2"><a href="/post/pid=<%= ele._id %>" class="text-2xl capitalize font-semibold hover:text-blue-400"><%=ele.title %></a></h2>
                     <p class="mt-2"><%=ele.content %></p>
                 </div>
             </div>

@@ -7,31 +7,28 @@
     <title>Document</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-
 <body>
-    <%- include('Navbar'); %>
+    <%- include('../Navbar'); %>
     <div class="container m-auto px-30 grid grid-cols-3 gap-2 py-[70px]">
         <div class="post col-span-2 rounded-sm">
-            <% user_post.map((ele, index)=>{ %>
             <div class="w-full h-max  flex flex-row mt-2 gap-2 p-3 rounded-md shadow-md">
                 <img src="" alt="" srcset="" class="w-15 h-15 rounded-full bg-indigo-400">
                 <div class="w-full">
                     <span class="flex flex-row gap-5 border-b-2 border-gray-300">
-                        <p class="cursor-pointer font-semibold capitalize hover:text-blue-400">
-                            <%= ele.user.name %>
-                        </p>
+                        <a href='/post/uid=<%= post.user._id %>/allpost' class="cursor-pointer font-semibold capitalize hover:text-blue-400">
+                            <%= post.user.name %>
+                        </a>
                         <p class="font-semibold bg">
-                            <%= new Date(ele.date).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year:'numeric' }) %>
+                            <%= new Date(post.date).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year:'numeric' }) %>
                         </p>
                     </span>
-                    <h2 class="mt-2"><a href="/post/pid=<%= ele._id %>"  class="text-2xl capitalize font-semibold hover:text-blue-400"><%=ele.title %></a></h2>
-                    <p class="mt-2"><%=ele.content %></p>
+                    <h2 class="mt-2"><p class="text-2xl capitalize font-semibold hover:text-blue-400"><%=post.title %></p></h2>
+                    <p class="mt-2"><%=post.content %></p>
                 </div>
             </div>
-            <% }) %>
         </div>
-        <%- include('Sidebar'); %>
+        <%- include('../Sidebar'); %>
     </div>
 </body>
-
+<script src="/src/js/post/post.js"></script>
 </html>
