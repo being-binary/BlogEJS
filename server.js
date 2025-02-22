@@ -3,6 +3,8 @@ import express from 'express';
 import cors from 'cors'
 import bcrypt from "bcryptjs";
 import { ObjectId } from 'mongodb';
+import userRoutes from './routes/userRoutes.js';
+import postRoutes from './routes/postRoutes.js'
 const salt = bcrypt.genSaltSync(10);
 const app = express()
 const port = 8800
@@ -19,80 +21,82 @@ app.get('/', async(req,res)=>{
     res.render('Index', {blogs})
 })
 
-app.get('/post',async (req, res) => {
-    res.render('PostForm')
-})
+// app.get('/post',async (req, res) => {
+//     res.render('PostForm')
+// })
 
-app.post('/post/new',async (req, res) => {
-    const data = req.body
-    const collection  = await posts();
-    const acknowledged  = await collection.insertOne(data)
-    if(acknowledged){
-        res.status(200).json({msg:'post created', success:true})
-    }
-    else{
-        res.status(401).json({msg:'error', success:false})
-    }
-})
+// app.post('/post/new',async (req, res) => {
+//     const data = req.body
+//     const collection  = await posts();
+//     const acknowledged  = await collection.insertOne(data)
+//     if(acknowledged){
+//         res.status(200).json({msg:'post created', success:true})
+//     }
+//     else{
+//         res.status(401).json({msg:'error', success:false})
+//     }
+// })
 
-app.get('/user/id=:id/post',async (req, res) => {
-    const { id } = ( req.params )
-    const post_collection  = await posts();
-    const user_collection  = await users();
-    const post  = await user_collection.findOne({_id:new ObjectId(id)})
-    const user_post = await post_collection.aggregate([{$lookup:{from:'users',localField:'user_id',foreignField:'_id', as:'user'}},{$unwind:'$user'},{$match:{'user._id':new ObjectId(id)}},{$project:{'user.password':0}}]).toArray();
-    console.log(user_post)
-    res.render('UserPost', {user_post})
-})
+app.use('/post',postRoutes)
 
-app.get('/loginSignup', (req, res) => {
-    res.render('LoginPage')
-})
+// app.get('/user/id=:id/post',async (req, res) => {
+//     const { id } = ( req.params )
+//     const post_collection  = await posts();
+//     const user_collection  = await users();
+//     const post  = await user_collection.findOne({_id:new ObjectId(id)})
+//     const user_post = await post_collection.aggregate([{$lookup:{from:'users',localField:'user_id',foreignField:'_id', as:'user'}},{$unwind:'$user'},{$match:{'user._id':new ObjectId(id)}},{$project:{'user.password':0}}]).toArray();
+//     console.log(user_post)
+//     res.render('UserPost', {user_post})
+// })
 
-app.get('/login', (req, res) => {
-    res.render('Login')
-})
 
-app.get('/signup', (req, res) => {
-    res.render('Signup')
-})
+// app.get('/login', (req, res) => {
+//     res.render('Login')
+// })
 
-app.post('/signup', async (req, res)=>{
-    const {email, password}  = req.body
-    console.log(req.body)
-    const collection  = await users();
-    const exist  = await collection.findOne({email})
-    if(exist){
-        return res.status(200).json({msg:"User Exist", success:false})
-    }else{
-        const hashpassword = bcrypt.hashSync(password, salt);
-        const response =  await collection.insertOne({ email: email, password:hashpassword})
-        if(response.acknowledged){
-            return res.status(200).json({msg:"User Creation Successfull", success:true})
-        }
-        else{
-            return res.status(400),json({msg:"Invalid Data", success:false})
-        } 
-    }
-})
+// app.get('/signup', (req, res) => {
+//     res.render('Signup')
+// })
 
-app.post('/login', async (req, res)=>{
-    const {email, password} = req.body
-    const collection  = await users();
-    const exist  = await collection.findOne({email})
-    if(exist){
-        const checkPassword = bcrypt.compareSync(password, exist.password);
-        if (checkPassword){
-            return res.status(200).json({msg:"Login Successfull", success:true, data:exist})
-        }
-        else{
-            return res.status(401).json({msg:"Invalid Credentails", success:false})
-        }
-    }
-    else{
-        return res.status(401).json({msg:"Invalid Credentails", success:false})
-    }
-})
+app.use('/user',userRoutes)
+
+//user/register
+// app.post('/signup', async (req, res)=>{
+//     const {email, password}  = req.body
+//     console.log(req.body)
+//     const collection  = await users();
+//     const exist  = await collection.findOne({email})
+//     if(exist){
+//         return res.status(200).json({msg:"User Exist", success:false})
+//     }else{
+//         const hashpassword = bcrypt.hashSync(password, salt);
+//         const response =  await collection.insertOne({ email: email, password:hashpassword})
+//         if(response.acknowledged){
+//             return res.status(200).json({msg:"User Creation Successfull", success:true})
+//         }
+//         else{
+//             return res.status(400),json({msg:"Invalid Data", success:false})
+//         } 
+//     }
+// })
+//user/login
+// app.post('/login', async (req, res)=>{
+//     const {email, password} = req.body
+//     const collection  = await users();
+//     const exist  = await collection.findOne({email})
+//     if(exist){
+//         const checkPassword = bcrypt.compareSync(password, exist.password);
+//         if (checkPassword){
+//             return res.status(200).json({msg:"Login Successfull", success:true, data:exist})
+//         }
+//         else{
+//             return res.status(401).json({msg:"Invalid Credentails", success:false})
+//         }
+//     }
+//     else{
+//         return res.status(401).json({msg:"Invalid Credentails", success:false})
+//     }
+// })
 
 
 app.listen(port,()=>{

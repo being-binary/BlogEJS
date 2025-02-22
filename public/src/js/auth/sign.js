@@ -25,7 +25,7 @@ function setobject(tag) {
 async function submitForm(event) {
     event.preventDefault()
     console.log(obj)
-    const res = await fetch('http://localhost:8800/signup',{
+    const res = await fetch('http://localhost:8800/user/register',{
         action:'/login',
         method:"POST",
         headers:{

@@ -25,7 +25,7 @@ async function post(event, user){
   })
   obj['user_id'] = user
 
-	const res = await fetch('http://localhost:8800/post/new', {
+	const res = await fetch('http://localhost:8800/post/create', {
 
 		method : 'POST',
 		headers:{

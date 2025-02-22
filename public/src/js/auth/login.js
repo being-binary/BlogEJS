@@ -17,7 +17,7 @@ function setobject(tag) {
 
 async function submitForm(event) {
     event.preventDefault()
-    const res = await fetch('http://localhost:8800/login',{
+    const res = await fetch('http://localhost:8800/user/login',{
         method:"POST",
         headers:{
             'content-type':'application/json',
