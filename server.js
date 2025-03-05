@@ -1,102 +1,59 @@
-import { users, posts} from './database/BlogProject.js'
+import {posts} from './database/BlogProject.js'
 import express from 'express';
 import cors from 'cors'
-import bcrypt from "bcryptjs";
-import { ObjectId } from 'mongodb';
 import userRoutes from './routes/userRoutes.js';
-import postRoutes from './routes/postRoutes.js'
-const salt = bcrypt.genSaltSync(10);
+import postRoutes from './routes/postRoutes.js';
+import session from 'express-session';
+import ConnectMongoDBSession from 'connect-mongodb-session';
+import path from 'path'
+const monogdbSession = ConnectMongoDBSession(session);
+import dotenv  from 'dotenv';
+dotenv.config();
+
 const app = express()
 const port = 8800
-
 app.use(cors())
 app.use(express.json())
 app.set('view engine', 'ejs')
-app.use(express.static('public'));
+app.use(express.static(path.join(path.resolve(), 'public')));
+
+
+
+const store = monogdbSession({
+    uri : process.env.EXPRESS_MONGODB_DATABASE_CONNECTION_STRING,
+    // uri : 'mongodb://localhost:27017/BlogProject',
+    collection: 'loginSession'
+}, (error) => {
+    if (error) {
+        console.error('Error connecting to MongoDB:', error);
+    } else {
+        console.log('Connected to MongoDB');
+    }
+});
+
+app.use(session({
+    secret : process.env.EXPRESS_SESSION_KEY,
+    resave : process.env.EXPRESS_SESSION_RESAVE === 'false'? false : true,
+    saveUninitialized: process.env.EXPRESS_SESSION_SAVEUNINITIALIZED === 'false'? false : true,
+    store : store,
+    cookie:   { 
+        httpOnly: process.env.EXPRESS_SESSION_COOKIE_HTTPONLY === 'false'? false : true, // Make cookie accessible only to the server, not JavaScript
+        secure: process.env.EXPRESS_SESSION_COOKIE_SECURE === 'false'? false : true,  // Set to true in production when using HTTPS
+        maxAge: 1000 * 60 * 60 * 24, // 1 day expiration time for the session cookie
+        sameSite: process.env.EXPRESS_SESSION_COOKIE_SAMESITE === 'false'? false : true // CSRF protection
+      }
+}))
 
 
 app.get('/', async(req,res)=>{
     const collection  = await posts();
-    const blogs = await collection.aggregate([{$lookup:{from:'users',localField:'user_id',foreignField:'_id', as:'user'}},{$project:{'user.password':0}}]).toArray();
-    res.render('Index', {blogs})
+    const blogs = await collection.aggregate([{$lookup:{from:'users',localField:'user_id',foreignField:'_id', as:'user'}},{$project:{'user.password':0}},{$sort:{ _id: -1}}]).toArray();
+    res.render('Index', {blogs, isAuth:req.session.isAuth, data: { user_name: req.session.uname  }} )
 })
-
-// app.get('/post',async (req, res) => {
-//     res.render('PostForm')
-// })
-
-// app.post('/post/new',async (req, res) => {
-//     const data = req.body
-//     const collection  = await posts();
-//     const acknowledged  = await collection.insertOne(data)
-//     if(acknowledged){
-//         res.status(200).json({msg:'post created', success:true})
-//     }
-//     else{
-//         res.status(401).json({msg:'error', success:false})
-//     }
-// })
 
 app.use('/post',postRoutes)
 
-// app.get('/user/id=:id/post',async (req, res) => {
-//     const { id } = ( req.params )
-//     const post_collection  = await posts();
-//     const user_collection  = await users();
-//     const post  = await user_collection.findOne({_id:new ObjectId(id)})
-//     const user_post = await post_collection.aggregate([{$lookup:{from:'users',localField:'user_id',foreignField:'_id', as:'user'}},{$unwind:'$user'},{$match:{'user._id':new ObjectId(id)}},{$project:{'user.password':0}}]).toArray();
-//     console.log(user_post)
-//     res.render('UserPost', {user_post})
-// })
-
-
-// app.get('/login', (req, res) => {
-//     res.render('Login')
-// })
-
-// app.get('/signup', (req, res) => {
-//     res.render('Signup')
-// })
-
 app.use('/user',userRoutes)
-
-//user/register
-// app.post('/signup', async (req, res)=>{
-//     const {email, password}  = req.body
-//     console.log(req.body)
-//     const collection  = await users();
-//     const exist  = await collection.findOne({email})
-//     if(exist){
-//         return res.status(200).json({msg:"User Exist", success:false})
-//     }else{
-//         const hashpassword = bcrypt.hashSync(password, salt);
-//         const response =  await collection.insertOne({ email: email, password:hashpassword})
-//         if(response.acknowledged){
-//             return res.status(200).json({msg:"User Creation Successfull", success:true})
-//         }
-//         else{
-//             return res.status(400),json({msg:"Invalid Data", success:false})
-//         } 
-//     }
-// })
-//user/login
-// app.post('/login', async (req, res)=>{
-//     const {email, password} = req.body
-//     const collection  = await users();
-//     const exist  = await collection.findOne({email})
-//     if(exist){
-//         const checkPassword = bcrypt.compareSync(password, exist.password);
-//         if (checkPassword){
-//             return res.status(200).json({msg:"Login Successfull", success:true, data:exist})
-//         }
-//         else{
-//             return res.status(401).json({msg:"Invalid Credentails", success:false})
-//         }
-//     }
-//     else{
-//         return res.status(401).json({msg:"Invalid Credentails", success:false})
-//     }
-// })
 
 
 app.listen(port,()=>{

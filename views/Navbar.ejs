@@ -1,10 +1,17 @@
 <nav class="fixed w-full h-[70px] bg-blue-800">
 	<div class="w-full h-full flex flex-row justify-between items-center container m-auto px-20">
-			<h1 class="text-3xl font-semibold text-white font-sanserif">Blog</h1>
-			<ul class="flex flex-row gap-5">
-					<li class="text-xl text-white"><a href="/">Home</a></li>
-					<li class="text-xl text-white"><a href="/user/login">Login</a></li>
-					<li class="text-xl text-white"><a href="/post/create">Post</a></li>
-			</ul>
+		<h1 class="text-3xl font-semibold text-white font-sanserif">Blog</h1>
+		<ul class="flex flex-row gap-5">
+			<% if (isAuth) { %>
+				<li class="text-xl text-white capitalize"><p><%= data.user_name%></p></li>
+				<li class="text-xl text-white"><a href="/post/create">Post</a></li>
+				<li class="text-xl text-white">
+					<form action="/user/logout" method="post"><input type="submit" value="Logout"></form>
+				</li>
+			<% } else { %>
+				<li class="text-xl text-white"><a href="/user/login">Login</a></li>
+			<% } %>
+				<li class="text-xl text-white"><a href="/">Home</a></li>
+		</ul>
 	</div>
 </nav>

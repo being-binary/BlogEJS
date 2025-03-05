@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="/css/tailwind.css" rel="stylesheet">
 </head>
 <body>
     <%- include('../Navbar'); %>
@@ -24,8 +24,45 @@
                     </span>
                     <h2 class="mt-2"><p class="text-2xl capitalize font-semibold hover:text-blue-400"><%=post.title %></p></h2>
                     <p class="mt-2"><%=post.content %></p>
+                    <hr class="border-t-4 border-blue-500 my-4" />
+                    <div>
+                        <!-- Tags Section -->
+                        <div class="mt-4">
+                            <span class="font-semibold">Tags: </span>
+                            <% if (post.tags && post.tags.length> 0) { %>
+                                <% post.tags.forEach(tag=> { %>
+                                    <a href="/posts/tag/<%= tag %>"
+                                        class="text-sm text-blue-500 hover:text-blue-700">
+                                        <%= tag %>
+                                    </a>
+                                    <% if (post.tags.indexOf(tag) !==post.tags.length - 1) { %>
+                                        <span>, </span>
+                                    <% } %>
+                                <% }) %>
+                            <% } else { %>
+                                <span>No tags available</span>
+                            <% } %>
+                        </div>
+
+                        <!-- Likes Section -->
+                        <div class="mt-4 flex items-center gap-3">
+                            <button class="text-lg font-semibold text-gray-700 hover:text-blue-500">
+                                👍 <%= post.likes || 0 %> Likes
+                            </button>
+                        </div>  
+                    </div>
                 </div>
             </div>
+            <% if (update) { %>
+                <div class="flex flex-row gap-5">
+                    <form action="/post/confirmdelete/<%= post._id %>" method="get">
+                        <input type="submit" value="Delete" class="mt-4 cursor-pointer text-white font-bold text-xl bg-red-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-red-500/50">
+                    </form>
+                    <form action="/post/updateform/<%= post._id %>" method="get">
+                        <input type="submit" value="Update" class="mt-4 cursor-pointer text-white font-bold text-xl bg-green-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-green-500/50">
+                    </form>
+                </div>
+            <% } %>
         </div>
         <%- include('../Sidebar'); %>
     </div>

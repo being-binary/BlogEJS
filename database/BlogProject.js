@@ -1,7 +1,10 @@
 import { MongoClient } from 'mongodb'
+import dotenv from 'dotenv';  // ES6 import syntax
+dotenv.config();
 
 // Connection URL
-const url = 'mongodb://localhost:27017';
+const url = process.env.EXPRESS_MONGODB_CONNECTION_STRING || '';
+// const url = 'mongodb://localhost:27017/';
 const client = new MongoClient(url);
 
 // Database Name
@@ -24,7 +27,7 @@ async function posts() {
   await client.connect();
   console.log('Connected successfully to server');
   const db = client.db(dbName);
-  const collection = db.collection('Post');
+  const collection = db.collection('Blogs');
 
   // the following code examples can be pasted here...
 
@@ -32,4 +35,4 @@ async function posts() {
 }
 
 
-export { users, posts }
+export { users, posts, url, dbName }

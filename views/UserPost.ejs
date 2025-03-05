@@ -5,33 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="/css/tailwind.css" rel="stylesheet">
 </head>
 
 <body>
     <%- include('Navbar'); %>
-    <div class="container m-auto px-30 grid grid-cols-3 gap-2 py-[70px]">
-        <div class="post col-span-2 rounded-sm">
-            <% user_post.map((ele, index)=>{ %>
-            <div class="w-full h-max  flex flex-row mt-2 gap-2 p-3 rounded-md shadow-md">
-                <img src="" alt="" srcset="" class="w-15 h-15 rounded-full bg-indigo-400">
-                <div class="w-full">
-                    <span class="flex flex-row gap-5 border-b-2 border-gray-300">
-                        <p class="cursor-pointer font-semibold capitalize hover:text-blue-400">
-                            <%= ele.user.name %>
-                        </p>
-                        <p class="font-semibold bg">
-                            <%= new Date(ele.date).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year:'numeric' }) %>
-                        </p>
-                    </span>
-                    <h2 class="mt-2"><a href="/post/pid=<%= ele._id %>"  class="text-2xl capitalize font-semibold hover:text-blue-400"><%=ele.title %></a></h2>
-                    <p class="mt-2"><%=ele.content %></p>
-                </div>
+        <div class="container m-auto px-30 grid grid-cols-3 gap-2 py-[70px]">
+            <div class="post col-span-2 rounded-sm">
+                <% user_post.map((ele, index)=>{ %>
+                    <div class="w-full h-max  flex flex-row mt-2 gap-2 p-3 rounded-md shadow-md">
+                        <img src="" alt="" srcset="" class="w-15 h-15 rounded-full bg-indigo-400">
+                        <div class="w-full">
+                            <span class="flex flex-row gap-5 border-b-2 border-gray-300">
+                                <p class="cursor-pointer font-semibold capitalize hover:text-blue-400">
+                                    <%= ele.user.name %>
+                                </p>
+                                <p class="font-semibold bg">
+                                    <%= new Date(ele.date).toLocaleDateString('en-IN', { weekday: 'long' ,
+                                        day: 'numeric' , month: 'long' , year:'numeric' }) %>
+                                </p>
+                            </span>
+                            <h2 class="mt-2"><a href="/post/pid=<%= ele._id %>"
+                                    class="text-2xl capitalize font-semibold hover:text-blue-400">
+                                    <%=ele.title %>
+                                </a></h2>
+                            <p class="mt-2">
+                                <%=ele.content %>
+                            </p>
+                            <hr class="border-t-4 border-blue-500 my-4" />
+                            <div>
+                                <!-- Tags Section -->
+                                <div class="mt-4">
+                                    <span class="font-semibold">Tags: </span>
+                                    <% if (ele.tags && ele.tags.length> 0) { %>
+                                        <% ele.tags.forEach(tag=> { %>
+                                            <a href="/posts/tag/<%= tag %>"
+                                                class="text-sm text-blue-500 hover:text-blue-700">
+                                                <%= tag %>
+                                            </a>
+                                            <% if (ele.tags.indexOf(tag) !==ele.tags.length - 1) { %>
+                                                <span>, </span>
+                                                <% } %>
+                                                    <% }) %>
+                                                        <% } else { %>
+                                                            <span>No tags available</span>
+                                                            <% } %>
+                                </div>
+
+                                <!-- Likes Section -->
+                                <div class="mt-4 flex items-center gap-3">
+                                    <button class="text-lg font-semibold text-gray-700 hover:text-blue-500">
+                                        👍 <%= ele.likes || 0 %> Likes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
             </div>
-            <% }) %>
+            <%- include('Sidebar'); %>
         </div>
-        <%- include('Sidebar'); %>
-    </div>
 </body>
 
 </html>
