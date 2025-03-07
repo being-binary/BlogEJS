@@ -9,7 +9,7 @@
 </head>
 <body>
     <%- include('../Navbar'); %>
-    <div class="container m-auto px-30 grid grid-cols-3 gap-2 py-[70px]">
+    <div class="container m-auto px-10 grid lg:grid-cols-3 grid-cols-1 gap-2 py-[70px]">
         <div class="post col-span-2 rounded-sm">
             <div class="w-full h-max  flex flex-row mt-2 gap-2 p-3 rounded-md shadow-md">
                 <img src="" alt="" srcset="" class="w-15 h-15 rounded-full bg-indigo-400">
@@ -46,8 +46,8 @@
 
                         <!-- Likes Section -->
                         <div class="mt-4 flex items-center gap-3">
-                            <button class="text-lg font-semibold text-gray-700 hover:text-blue-500">
-                                👍 <%= post.likes || 0 %> Likes
+                            <button onclick="toggleLike(event,'<%=post._id%>')" class="text-lg font-semibold text-gray-700 hover:text-blue-500">
+                                👍 <%= post.likes.length || 0 %> Likes
                             </button>
                         </div>  
                     </div>
@@ -68,4 +68,5 @@
     </div>
 </body>
 <script src="/src/js/post/post.js"></script>
+<script src="/src/js/post/postLikes.js"></script>
 </html>
