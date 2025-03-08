@@ -10,10 +10,12 @@ const monogdbSession = ConnectMongoDBSession(session);
 import dotenv  from 'dotenv';
 dotenv.config();
 
+
 const app = express()
 const port = 8800
 app.use(cors())
 app.use(express.json())
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(path.resolve(), 'public')));
 
