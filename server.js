@@ -56,8 +56,8 @@ app.use('/post',postRoutes)
 app.use('/user',userRoutes)
 
 
-app.listen(port,()=>{
-    console.log(`server running at http://localhost:${port}`)
-})
+// app.listen(port,()=>{
+//     console.log(`server running at http://localhost:${port}`)
+// })
 
-// export default app
+export default app
