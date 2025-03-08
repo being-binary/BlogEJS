@@ -40,4 +40,4 @@ async function posts() {
 }
 
 
-export { users, posts, url, dbName }
+export { users, posts, dbName }
