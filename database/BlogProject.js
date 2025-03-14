@@ -3,14 +3,13 @@ import dotenv from 'dotenv';  // ES6 import syntax
 dotenv.config();
 
 // Connection URL
+const url = process.env.EXPRESS_MONGODB_CONNECTION_STRING || "";
 try{
-  const url = process.env.EXPRESS_MONGODB_CONNECTION_STRING;
-
+  var client = new MongoClient(url);
 }catch{
   console.log('mongodb connectionn error')
 }
 // const url = 'mongodb://localhost:27017/';
-const client = new MongoClient(url);
 
 // Database Name
 const dbName = 'BlogProject';

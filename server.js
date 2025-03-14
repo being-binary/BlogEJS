@@ -10,6 +10,13 @@ const monogdbSession = ConnectMongoDBSession(session);
 import dotenv  from 'dotenv';
 dotenv.config();
 
+import Toastify from 'toastify-js'
+import { fileURLToPath } from 'url';
+
+// Replicate __dirname for ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const app = express()
 const port = 8800
@@ -58,8 +65,8 @@ app.use('/post',postRoutes)
 app.use('/user',userRoutes)
 
 
-// app.listen(port,()=>{
-//     console.log(`server running at http://localhost:${port}`)
-// })
+app.listen(port,()=>{
+    console.log(`server running at http://localhost:${port}`)
+})
 
-export default app
+// export default app
