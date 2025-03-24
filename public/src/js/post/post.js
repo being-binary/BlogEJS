@@ -27,7 +27,7 @@ async function post(event){
 		second: 'numeric'
   })
   	obj.tags = obj.tags.split(',')
-	const res = await fetch('http://localhost:8800/post/create', {
+	const res = await fetch('https://blogejs-magw.onrender.com/post/create', {
 
 		method : 'POST',
 		headers:{
@@ -48,7 +48,7 @@ async function update(event, user_id, pid){
 	event.preventDefault()
 	obj['date'] = new Date()
 
-	const res = await fetch(`http://localhost:8800/post/update/${pid}`, {
+	const res = await fetch(`https://blogejs-magw.onrender.com/post/update/${pid}`, {
 
 		method : 'put',
 		headers:{
