@@ -26,6 +26,7 @@ async function post(event){
 		minute: 'numeric', 
 		second: 'numeric'
   })
+  	obj.likes = []
   	obj.tags = obj.tags.split(',')
 	const res = await fetch('https://blogejs-magw.onrender.com/post/create', {
 
