@@ -74,7 +74,7 @@ function redirect(event){
 
 async function deleteAction(event, id){
 	event.preventDefault()
-	const url = `http://localhost:8800/post/delete/${id}`
+	const url = `https://blogejs-magw.onrender.com/post/delete/${id}`
 	console.log(`Sending DELETE request to: ${url}`);
 	try {
 		await fetch(url, {

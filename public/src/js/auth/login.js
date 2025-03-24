@@ -16,7 +16,7 @@ function setobject(tag) {
 
 async function submitForm(event) {
     event.preventDefault()
-    const res = await fetch('http://localhost:8800/user/login',{
+    const res = await fetch('https://blogejs-magw.onrender.com/user/login',{
         method:"POST",
         headers:{
             'content-type':'application/json',
