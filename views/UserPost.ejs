@@ -55,7 +55,8 @@
 
                                 <!-- Likes Section -->
                                 <div class="mt-4 flex items-center gap-3">
-                                    <button onclick="toggleLike(event,'<%=ele._id%>')" class="text-lg font-semibold text-gray-700 hover:text-blue-500">
+                                    <button onclick="toggleLike(event,'<%=ele._id%>')"
+                                        class="text-lg font-semibold text-gray-700 hover:text-blue-500">
                                         👍 <%= ele.likes.length || 0 %> Likes
                                     </button>
                                 </div>
@@ -66,7 +67,9 @@
             </div>
             <%- include('Sidebar'); %>
         </div>
-    </body>
-    <script type="module" src="/src/js/post/postLikes.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        <script src="/src/js/toastify/toast.js"></script>
+        <script src="/src/js/auth/login.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</body>
+
 </html>

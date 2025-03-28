@@ -8,67 +8,80 @@
     <link href="/css/tailwind.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
+
 <body>
     <%- include('../Navbar'); %>
-    <div class="container m-auto px-10 grid lg:grid-cols-3 grid-cols-1 gap-2 py-[70px]">
-        <div class="post col-span-2 rounded-sm">
-            <div class="w-full h-max  flex flex-row mt-2 gap-2 p-3 rounded-md shadow-md">
-                <img src="" alt="" srcset="" class="w-15 h-15 rounded-full bg-indigo-400">
-                <div class="w-full">
-                    <span class="flex flex-row gap-5 border-b-2 border-gray-300">
-                        <a href='/post/uid=<%= post.user._id %>/allpost' class="cursor-pointer font-semibold capitalize hover:text-blue-400">
-                            <%= post.user.name %>
-                        </a>
-                        <p class="font-semibold bg">
-                            <%= new Date(post.date).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year:'numeric' }) %>
+        <div class="container m-auto px-10 grid lg:grid-cols-3 grid-cols-1 gap-2 py-[70px]">
+            <div class="post col-span-2 rounded-sm">
+                <div class="w-full h-max  flex flex-row mt-2 gap-2 p-3 rounded-md shadow-md">
+                    <img src="" alt="" srcset="" class="w-15 h-15 rounded-full bg-indigo-400">
+                    <div class="w-full">
+                        <span class="flex flex-row gap-5 border-b-2 border-gray-300">
+                            <a href='/post/uid=<%= post.user._id %>/allpost'
+                                class="cursor-pointer font-semibold capitalize hover:text-blue-400">
+                                <%= post.user.name %>
+                            </a>
+                            <p class="font-semibold bg">
+                                <%= new Date(post.date).toLocaleDateString('en-IN', { weekday: 'long' , day: 'numeric' ,
+                                    month: 'long' , year:'numeric' }) %>
+                            </p>
+                        </span>
+                        <h2 class="mt-2">
+                            <p class="text-2xl capitalize font-semibold hover:text-blue-400">
+                                <%=post.title %>
+                            </p>
+                        </h2>
+                        <p class="mt-2">
+                            <%=post.content %>
                         </p>
-                    </span>
-                    <h2 class="mt-2"><p class="text-2xl capitalize font-semibold hover:text-blue-400"><%=post.title %></p></h2>
-                    <p class="mt-2"><%=post.content %></p>
-                    <hr class="border-t-4 border-blue-500 my-4" />
-                    <div>
-                        <!-- Tags Section -->
-                        <div class="mt-4">
-                            <span class="font-semibold">Tags: </span>
-                            <% if (post.tags && post.tags.length> 0) { %>
-                                <% post.tags.forEach(tag=> { %>
-                                    <a href="/posts/tag/<%= tag %>"
-                                        class="text-sm text-blue-500 hover:text-blue-700">
-                                        <%= tag %>
-                                    </a>
-                                    <% if (post.tags.indexOf(tag) !==post.tags.length - 1) { %>
-                                        <span>, </span>
-                                    <% } %>
-                                <% }) %>
-                            <% } else { %>
-                                <span>No tags available</span>
-                            <% } %>
-                        </div>
+                        <hr class="border-t-4 border-blue-500 my-4" />
+                        <div>
+                            <!-- Tags Section -->
+                            <div class="mt-4">
+                                <span class="font-semibold">Tags: </span>
+                                <% if (post.tags && post.tags.length> 0) { %>
+                                    <% post.tags.forEach(tag=> { %>
+                                        <a href="/posts/tag/<%= tag %>"
+                                            class="text-sm text-blue-500 hover:text-blue-700">
+                                            <%= tag %>
+                                        </a>
+                                        <% if (post.tags.indexOf(tag) !==post.tags.length - 1) { %>
+                                            <span>, </span>
+                                            <% } %>
+                                                <% }) %>
+                                                    <% } else { %>
+                                                        <span>No tags available</span>
+                                                        <% } %>
+                            </div>
 
-                        <!-- Likes Section -->
-                        <div class="mt-4 flex items-center gap-3">
-                            <button onclick="toggleLike(event,'<%=post._id%>')" class="text-lg font-semibold text-gray-700 hover:text-blue-500">
-                                👍 <%= post.likes.length || 0 %> Likes
-                            </button>
-                        </div>  
+                            <!-- Likes Section -->
+                            <div class="mt-4 flex items-center gap-3">
+                                <button onclick="toggleLike(event,'<%=post._id%>')"
+                                    class="text-lg font-semibold text-gray-700 hover:text-blue-500">
+                                    👍 <%= post.likes.length || 0 %> Likes
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <% if (update) { %>
+                    <div class="flex flex-row gap-5">
+                        <form action="/post/confirmdelete/<%= post._id %>" method="get">
+                            <input type="submit" value="Delete"
+                                class="mt-4 cursor-pointer text-white font-bold text-xl bg-red-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-red-500/50">
+                        </form>
+                        <form action="/post/updateform/<%= post._id %>" method="get">
+                            <input type="submit" value="Update"
+                                class="mt-4 cursor-pointer text-white font-bold text-xl bg-green-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-green-500/50">
+                        </form>
+                    </div>
+                    <% } %>
             </div>
-            <% if (update) { %>
-                <div class="flex flex-row gap-5">
-                    <form action="/post/confirmdelete/<%= post._id %>" method="get">
-                        <input type="submit" value="Delete" class="mt-4 cursor-pointer text-white font-bold text-xl bg-red-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-red-500/50">
-                    </form>
-                    <form action="/post/updateform/<%= post._id %>" method="get">
-                        <input type="submit" value="Update" class="mt-4 cursor-pointer text-white font-bold text-xl bg-green-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-green-500/50">
-                    </form>
-                </div>
-            <% } %>
+            <%- include('../Sidebar'); %>
         </div>
-        <%- include('../Sidebar'); %>
-    </div>
+        <script src="/src/js/toastify/toast.js"></script>
+        <script src="/src/js/auth/login.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
-<script type="module" src="/src/js/post/post.js"></script>
-<script type="module" src="/src/js/post/postLikes.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </html>

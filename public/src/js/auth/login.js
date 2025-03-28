@@ -1,11 +1,9 @@
-import toast from "../toastity/toast.js"
-
 let obj = {
     email: '',
     password:''
 }
 
-export function setobject(tag) {
+function setobject(tag) {
     if(tag.name == 'email'){
         obj.email = tag.value
     }

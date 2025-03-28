@@ -49,4 +49,7 @@ class AppToast {
     }
 }
 
-export default new AppToast()
+const toast =  new AppToast()
+
+
+console.log('toast')

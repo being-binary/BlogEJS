@@ -19,25 +19,28 @@
                     </div>
                     <div>
                         <input type="submit" onclick="redirect(event)" value="No"
-                        class="mt-4 cursor-pointer text-white font-bold text-xl bg-green-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-green-500/50">
-                        <button data-pid="<%= pid %>" id="deleteButton" class="mt-4 cursor-pointer text-white font-bold text-xl bg-red-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-red-500/50">Yes</button>
+                            class="mt-4 cursor-pointer text-white font-bold text-xl bg-green-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-green-500/50">
+                        <button data-pid="<%= pid %>" id="deleteButton"
+                            class="mt-4 cursor-pointer text-white font-bold text-xl bg-red-400 px-4 py-3 w-min uppercase rounded-md shadow-lg shadow-red-500/50">Yes</button>
                     </div>
-                </div> 
+                </div>
             </div>
             <%- include('../Sidebar'); %>
         </div>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 const deleteButton = document.getElementById('deleteButton');
                 if (deleteButton) {
-                    deleteButton.addEventListener('click', function(event) {
+                    deleteButton.addEventListener('click', function (event) {
                         const pid = this.dataset.pid;
                         deleteAction(event, pid);
                     });
                 }
             });
         </script>
+        <script src="/src/js/toastify/toast.js"></script>
+        <script src="/src/js/auth/login.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
-<script type="module" src="/src/js/post/post.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </html>
