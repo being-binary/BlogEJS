@@ -5,7 +5,7 @@ let obj = {
     password:''
 }
 
-function setobject(tag) {
+export function setobject(tag) {
     if(tag.name == 'email'){
         obj.email = tag.value
     }
