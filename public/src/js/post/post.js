@@ -1,3 +1,4 @@
+import toast from "../toastity/toast.js"
 
 let obj ={
 	title : '',
@@ -37,10 +38,13 @@ async function post(event){
 		body:JSON.stringify({...obj})
 	})
 	const data = await res.json()
+		toast.toastSuccess(data.msg)
 	if(data.success){
+		toast.toastSuccess(data.msg)
 		window.location.href = '/'
 	}
 	else{
+		toast.toastError(data.msg)
 		console.log(data)
 	}
 }
@@ -59,9 +63,11 @@ async function update(event, user_id, pid){
 	})
 	const data = await res.json()
 	if(data.success){
+		toast.toastSuccess(data.msg)
 		window.location.href = '/'
 	}
 	else{
+		toast.toastError(data.msg)
 		console.log(data)
 	}
 }
@@ -69,6 +75,7 @@ async function update(event, user_id, pid){
 
 function redirect(event){
 	event.preventDefault()
+	toast.toastInfo('You have been redirected to homepage')
 	window.location.href = '/'
 }
 
@@ -86,14 +93,18 @@ async function deleteAction(event, id){
 		}).then((res)=>{
 			if(res.ok){
 				console.log('http request successful');
+				toast.toastSuccess(data.msg)
 				window.location.href = '/'
 			} else {
+				toast.toastError(data.msg)
 				console.log('http request unsuccessful',res)
 			}
 		}).catch((err)=>{
+			toast.toastError(data.msg)
 			console.log(err.message)
 		})
 	} catch (error) {
+		toast.toastInfo(data.msg)
 		console.log(error.message)
 	}
 }

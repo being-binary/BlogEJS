@@ -1,5 +1,4 @@
-  // Sample function for liking a post. You can customize this based on your back-end implementation
-  console.log('helloWorld')
+import toast from "../toastity/toast";
   function toggleLike( event , postId) {
     event.preventDefault()
     // Make an AJAX request to like/unlike the post
@@ -12,11 +11,13 @@
     .then(response => response.json())
     .then(data => {
         if (data.success) {
+            toast.toastSuccess(data.msg)
             // Reload the page or update the like count dynamically
             location.reload();  // Or update the like count dynamically
         } else {
+            toast.toastError(data.msg)
             console.log(data.msg)
         }
     })
-    .catch(err => window.location.href  = '/user/login');
+    .catch(err => {toast.toastInfo("Something went wrong"); window.location.href  = '/user/login'});
 }

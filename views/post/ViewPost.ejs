@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body>
     <%- include('../Navbar'); %>
@@ -66,7 +67,8 @@
         </div>
         <%- include('../Sidebar'); %>
     </div>
+    <script type="module" src="/src/js/post/post.js"></script>
+    <script type="module" src="/src/js/post/postLikes.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
-<script src="/src/js/post/post.js"></script>
-<script src="/src/js/post/postLikes.js"></script>
 </html>

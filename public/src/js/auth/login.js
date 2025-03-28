@@ -1,9 +1,9 @@
+import toast from "../toastity/toast.js"
 
 let obj = {
     email: '',
     password:''
 }
-let pass
 
 function setobject(tag) {
     if(tag.name == 'email'){
@@ -26,9 +26,10 @@ async function submitForm(event) {
     const data = await res.json()
     console.log(data)
     if(data.success){
+        toast.toastSuccess(data.msg)
         window.location.href = '/'
     }
     else{
-        alert('use not found')
+        toast.toastError(data.msg)
     }
 }

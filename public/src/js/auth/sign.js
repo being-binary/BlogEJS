@@ -1,4 +1,4 @@
-console.log('hello')
+import toast from "../toastity/toast.js"
 
 let obj = {
     email: '',
@@ -35,9 +35,10 @@ async function submitForm(event) {
     })
     const data = await res.json()
     if(data.success){
+        toast.toastSuccess(data.msg)
         window.location.href = '/'
     }
     else{
-        alert(data.msg)
+        toast.toastError(data.msg)
     }
 }

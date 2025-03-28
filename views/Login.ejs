@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="/css/tailwind.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tostify/dist/tostify.min.css">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body>
     <div class="flex flex-col justify-center font-[sans-serif] sm:h-screen p-4">
@@ -27,7 +26,7 @@
             </div>
   
             <div class="!mt-8">
-              <button onclick="submitForm(event)" type="button" class="w-full py-3 px-4 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+              <button onclick="submitForm(event)" type="button" class="cursor-pointer w-full py-3 px-4 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
                 Login
               </button>
             </div>
@@ -35,8 +34,8 @@
           </form>
         </div>
       </div>
+      <script type="module" src="/src/js/auth/login.js"></script> 
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/tostify/dist/tostify.min.js"></script>
-<script src="/src/js/auth/login.js"></script> 
 
 </html>
