@@ -1,4 +1,4 @@
-import toast from "../toastity/toast";
+
   function toggleLike( event , postId) {
     event.preventDefault()
     // Make an AJAX request to like/unlike the post

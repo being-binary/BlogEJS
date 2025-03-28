@@ -1,4 +1,3 @@
-import toast from "../toastity/toast.js"
 
 let obj ={
 	title : '',
