@@ -92,18 +92,18 @@ async function deleteAction(event, id){
 		}).then((res)=>{
 			if(res.ok){
 				console.log('http request successful');
-				toast.toastSuccess(data.msg)
+				toast.toastSuccess('post deleted successfully')
 				window.location.href = '/'
 			} else {
-				toast.toastError(data.msg)
+				toast.toastError('Post deletion Unsccessfull')
 				console.log('http request unsuccessful',res)
 			}
 		}).catch((err)=>{
-			toast.toastError(data.msg)
+			toast.toastError(err.message)
 			console.log(err.message)
 		})
 	} catch (error) {
-		toast.toastInfo(data.msg)
+		toast.toastInfo(error.message)
 		console.log(error.message)
 	}
 }
