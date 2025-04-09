@@ -18,14 +18,7 @@ function setObject(tag){
 
 async function post(event){
 	event.preventDefault()
-	obj['date'] = new Date().toLocaleString('en-US', { 
-		year: 'numeric', 
-		month: 'long', 
-		day: 'numeric', 
-		hour: 'numeric', 
-		minute: 'numeric', 
-		second: 'numeric'
-  })
+	obj['date'] = new Date().toISOString();
   	obj.likes = []
   	obj.tags = obj.tags.split(',')
 	const res = await fetch('https://blogejs-magw.onrender.com/post/create', {

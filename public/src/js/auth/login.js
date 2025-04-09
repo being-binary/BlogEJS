@@ -3,12 +3,24 @@ let obj = {
     password:''
 }
 
+let regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+let regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
 function setobject(tag) {
     if(tag.name == 'email'){
-        obj.email = tag.value
+        if(!regexEmail.test(tag.value)){
+            obj.email = tag.value
+        }
+        else{
+            toast.toastError('Invalid Email Format')
+        }
     }
     if(tag.name == 'password'){
-        obj.password  = tag.value
+        if(!regexPassword.test(tag.value)){
+            obj.password  = tag.value
+        }
+        else{
+            toast.toastError('Invalid Password Format')
+        }
     }
 }
 
