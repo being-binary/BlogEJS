@@ -33,7 +33,7 @@ const removeLoader = () => {
 };
 
 // Call the loader
-// loader();
+loader();
 
 // // Remove it after 3 seconds for demo purposes
-// setTimeout(removeLoader, 3000);
+setTimeout(removeLoader, 2000);
