@@ -12,7 +12,7 @@ const register_page = async (req, res) => {
 }
 
 const register_user = async (req, res) => {
-    const { email, password } = req.body
+    const { email, password , name} = req.body
     console.log(req.body)
     const collection = await users();
     const exist = await collection.findOne({ email })
@@ -20,7 +20,7 @@ const register_user = async (req, res) => {
         return res.status(200).json({ msg: "User Exist", success: false })
     } else {
         const hashpassword = bcrypt.hashSync(password, salt);
-        const response = await collection.insertOne({ email: email, password: hashpassword })
+        const response = await collection.insertOne({ email: email, password: hashpassword, name })
         if (response.acknowledged) {
             return res.status(200).json({ msg: "User Creation Successfull", success: true })
         }
