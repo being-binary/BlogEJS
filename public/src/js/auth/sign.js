@@ -1,10 +1,11 @@
 
 let obj = {
     email: '',
-    password: ''
+    password: '',
+    name: ''
 }
 
-
+let regexName = /^[A-Za-z]{2,}( [A-Za-z]{2,})+$/;
 let regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 let regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
 let pass = ''
@@ -19,6 +20,16 @@ function allKeysHaveValues(obj) {
 
 
 function setobject(tag) {
+    if (tag.name == 'fullname') {
+        console.log('iam name',tag.value)
+        if (tag.value == '') return toast.toastError(`${tag.name} required`)
+        if (regexName.test(tag.value)) {
+            obj.name = tag.value
+        }
+        else {
+            toast.toastError('Invalid Name Format')
+        }
+    }
     if (tag.name == 'email') {
         if (tag.value == '') return toast.toastError(`${tag.name} required`)
         if (regexEmail.test(tag.value)) {
@@ -57,6 +68,7 @@ function setobject(tag) {
 
 async function submitForm(event) {
     event.preventDefault()
+
     if (allKeysHaveValues(obj)) {
         loader()
         const res = await fetch('https://blogejs-magw.onrender.com/user/register', {

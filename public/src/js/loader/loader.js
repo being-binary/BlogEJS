@@ -5,7 +5,7 @@ const loader = () => {
   loading.id = 'loader-screen';
   loading.style.height = '100vh';
   loading.style.width = '100%';
-  loading.style.backgroundColor = '#31E5F9';
+  loading.style.backgroundColor = '#F0F8FF';
   loading.style.display = 'flex';
   loading.style.justifyContent = 'center';
   loading.style.alignItems = 'center';
