@@ -5,13 +5,13 @@ let obj ={
 }
 
 function setObject(tag){
-	if(tag.name=="title"){
+	if(tag.name=="title" && tag.value != ''){
 		obj.title = tag.value
 	}
-	if(tag.name=="content"){
+	if(tag.name=="content" && tag.value != ''){
 		obj.content = tag.value
 	}
-	if(tag.name == 'tags'){
+	if(tag.name == 'tags' && tag.value != ''){
 		obj.tags = tag.value
 	}
 }
