@@ -13,13 +13,13 @@ const loader = () => {
   loading.style.top = 0;
   loading.style.left = 0;
   loading.style.zIndex = 9999;
-  loading.style.opacity = '0.9'
+  loading.style.opacity = '0.7'
 
   const text = document.createElement('p');
   text.innerHTML = 'Loading...';
   text.style.fontSize = '36px';
   text.style.fontFamily = 'Arial, sans-serif';
-  text.style.color = 'white'
+  text.style.color = 'black'
   loading.append(text);
   body.append(loading);
 };
